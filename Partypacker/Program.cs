@@ -1,7 +1,10 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Partypacker;
+﻿using Partypacker;
 using Pastel;
 using System.Drawing;
+
+Console.SetWindowSize(75, 20);
+
+Console.CursorVisible = false;
 
 Console.WriteLine(@"
   _____           _                          _             
@@ -14,16 +17,16 @@ Console.WriteLine(@"
                       |___/|_|                             ".Pastel(Color.IndianRed));
 Console.WriteLine("-----------------------------------------------------------".Pastel(Color.CadetBlue));
 
-Console.WriteLine("Welcome to Partypacker - what do you want to do?");
+Console.WriteLine("Welcome to Partypacker - Select an option below:");
 
 ConsoleKeyInfo ReceivedKeyInput;
 int SelectedOptionIndex = 0;
 bool Running = true;
 SelectableOption[] Options = new SelectableOption[]
 {
-    new SelectableOption("Test 1", () => { Console.WriteLine("cool!"); }),
-    new SelectableOption("Test 2", () => { Console.WriteLine("epic!"); }),
-    new SelectableOption("Test 3", () => { Console.WriteLine("awesome!"); })
+    new SelectableOption("Launch Fortnite", () => { Console.WriteLine("cool!"); }),
+    new SelectableOption("Open Dashboard", () => { Console.WriteLine("epic!"); }),
+    new SelectableOption("Settings", () => { Console.WriteLine("awesome!"); })
 };
 
 while (Running)
@@ -31,8 +34,9 @@ while (Running)
     (int left, int top) = Console.GetCursorPosition();
     for (int i = 0; i < Options.Length; i++)
     {
+        bool Selected = SelectedOptionIndex == i;
         SelectableOption Option = Options[i];
-        Console.WriteLine($"{(SelectedOptionIndex == i ? ">".Pastel(Color.LimeGreen) : " ")}   {Option.Name.Pastel(Color.DarkGreen)}");
+        Console.WriteLine($"{(Selected ? ">".Pastel(Color.LimeGreen) : " ")}   {Option.Name.Pastel(Selected ? Color.DarkGreen : Color.Gray)}");
     }
 
     ReceivedKeyInput = Console.ReadKey();

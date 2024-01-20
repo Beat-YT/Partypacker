@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Partypacker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fbb76bb36e64cbc7732549c16c8cae25276a6c9d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Partypacker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Partypacker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
