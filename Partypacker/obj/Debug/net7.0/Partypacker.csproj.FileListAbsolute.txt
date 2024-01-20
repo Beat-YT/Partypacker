@@ -1,0 +1,17 @@
+D:\Projects\DotNET\Partypacker\Partypacker\bin\Debug\net7.0\Partypacker.exe
+D:\Projects\DotNET\Partypacker\Partypacker\bin\Debug\net7.0\Partypacker.deps.json
+D:\Projects\DotNET\Partypacker\Partypacker\bin\Debug\net7.0\Partypacker.runtimeconfig.json
+D:\Projects\DotNET\Partypacker\Partypacker\bin\Debug\net7.0\Partypacker.dll
+D:\Projects\DotNET\Partypacker\Partypacker\bin\Debug\net7.0\Partypacker.pdb
+D:\Projects\DotNET\Partypacker\Partypacker\obj\Debug\net7.0\Partypacker.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\DotNET\Partypacker\Partypacker\obj\Debug\net7.0\Partypacker.AssemblyInfoInputs.cache
+D:\Projects\DotNET\Partypacker\Partypacker\obj\Debug\net7.0\Partypacker.AssemblyInfo.cs
+D:\Projects\DotNET\Partypacker\Partypacker\obj\Debug\net7.0\Partypacker.csproj.CoreCompileInputs.cache
+D:\Projects\DotNET\Partypacker\Partypacker\obj\Debug\net7.0\Partypacker.dll
+D:\Projects\DotNET\Partypacker\Partypacker\obj\Debug\net7.0\refint\Partypacker.dll
+D:\Projects\DotNET\Partypacker\Partypacker\obj\Debug\net7.0\Partypacker.pdb
+D:\Projects\DotNET\Partypacker\Partypacker\obj\Debug\net7.0\Partypacker.genruntimeconfig.cache
+D:\Projects\DotNET\Partypacker\Partypacker\obj\Debug\net7.0\ref\Partypacker.dll
+D:\Projects\DotNET\Partypacker\Partypacker\bin\Debug\net7.0\Pastel.dll
+D:\Projects\DotNET\Partypacker\Partypacker\obj\Debug\net7.0\Partypacker.csproj.AssemblyReference.cache
+D:\Projects\DotNET\Partypacker\Partypacker\obj\Debug\net7.0\Partypacker.csproj.CopyComplete

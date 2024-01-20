@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "xszAUj8QGuuyIxqTWZGTE3qs/uA4z4NKEKxOVu7TuNRT3IXC0zJxEV9TwNlrRe3sPQCAxAG+5n6ffIvah8bt7A==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\DotNET\\Partypacker\\Partypacker\\Partypacker.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\McMistrzYT\\.nuget\\packages\\pastel\\5.0.0\\pastel.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
