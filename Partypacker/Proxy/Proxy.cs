@@ -131,6 +131,7 @@ namespace Partypacker.Net
         {
             if (oSession.PathAndQuery.Contains("/content/api/pages/fortnite-game/spark-tracks")
              || oSession.HostnameIs("cdn.qstv.on.epicgames.com")
+             || oSession.HostnameIs("cdn-0001.qstv.on.epicgames.com")
              || oSession.PathAndQuery.Contains("/master.blurl")
              || oSession.PathAndQuery.Contains("/main.blurl")
             )
@@ -150,7 +151,7 @@ namespace Partypacker.Net
 
                 if (oSession.PathAndQuery.Contains("/master.blurl")
                  || oSession.PathAndQuery.Contains("/main.blurl"))
-                    oSession.fullUrl = BaseURL + oSession.PathAndQuery;
+                    oSession.fullUrl = BaseURL + "/song/download" + oSession.PathAndQuery;
                 else
                     oSession.fullUrl = BaseURL + oSession.PathAndQuery;
             }
