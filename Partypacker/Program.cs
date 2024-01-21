@@ -16,7 +16,6 @@ namespace Partypacker
             ushort? port = 6969;
 
             Console.SetWindowSize(75, 20);
-            Console.SetBufferSize(75, 20);
 
             Console.CursorVisible = false;
 
@@ -39,8 +38,8 @@ namespace Partypacker
             SelectableOption[] Options = new SelectableOption[]
             {
                 new SelectableOption("Launch Fortnite", () =>
-                    Run(port, () => Process.Start("com.epicgames.launcher://apps/fn%3A4fe75bbc5a674f4f9b356b5c90567da5%3AFortnite?action=launch&silent=true"))),
-                new SelectableOption("Open Dashboard", () => { Console.WriteLine("epic!"); }),
+                    Run(port, () => Process.Start(new ProcessStartInfo { FileName = "com.epicgames.launcher://apps/fn%3A4fe75bbc5a674f4f9b356b5c90567da5%3AFortnite?action=launch&silent=true", UseShellExecute = true }))),
+                new SelectableOption("Open Dashboard", () => Process.Start(new ProcessStartInfo { FileName = "https://partypack.mcthe.dev", UseShellExecute = true })),
                 new SelectableOption("Settings", () => { Console.WriteLine("awesome!"); })
             };
 
@@ -77,6 +76,7 @@ namespace Partypacker
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Debug.Fail(e.StackTrace);
             }
             finally
             {
@@ -105,7 +105,7 @@ namespace Partypacker
 
         private static bool CleanUp(CtrlType ctrlType)
         {
-            Proxx.StopProxy();
+            Proxx?.StopProxy();
             return true;
         }
     }

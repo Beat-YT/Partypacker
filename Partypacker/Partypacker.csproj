@@ -10,9 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCMakeCert" Version="2.0.9" />
     <PackageReference Include="FiddlerCore.Trial" Version="5.0.2" />
     <PackageReference Include="Pastel" Version="5.0.0" />
     <PackageReference Include="System.ComponentModel.Composition" Version="8.0.0" />
+    <PackageReference Include="Telerik.NetworkConnections" Version="0.2.0" />
   </ItemGroup>
   
   <ItemGroup>

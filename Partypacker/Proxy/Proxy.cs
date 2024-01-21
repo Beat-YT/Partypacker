@@ -141,9 +141,9 @@ namespace Partypacker.Net
                     return;
                 }
 
-                string BaseURL = // thats gonna be taken on most machines but sure
+                string BaseURL =
 #if DEBUG
-                    "http://localhost:80";
+                    "http://localhost:6677";
 #else
                     "https://api.partypack.mcthe.dev";
 #endif
