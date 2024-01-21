@@ -5,12 +5,21 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<ApplicationIcon>icon.ico</ApplicationIcon>
+	<PackageIcon>icon.ico</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FiddlerCore.Trial" Version="5.0.2" />
     <PackageReference Include="Pastel" Version="5.0.0" />
     <PackageReference Include="System.ComponentModel.Composition" Version="8.0.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="icon.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

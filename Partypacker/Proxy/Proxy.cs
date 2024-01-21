@@ -8,9 +8,11 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using static Fiddler.FiddlerApplication;
-using static Partypacker.Core.Win32;
+using static Partypacker.Win32;
+using Pastel;
+using System.Drawing;
 
-namespace Partypacker.Proxy
+namespace Partypacker.Net
 {
     internal class Proxy
     {
@@ -18,23 +20,14 @@ namespace Partypacker.Proxy
         // https://github.com/PsychoPast/LawinServer/blob/master/LawinServer/Proxy/Proxy.cs
         // without it, fiddler-less proxying would have never been achieved
 
-        #region VARIABLES
         private const string Proxy_Server = "ProxyServer";
-
         private const string Proxy_Enable = "ProxyEnable";
-
         private readonly AppRegistry appRegistry;
-
         private readonly string proxyKey = @$"{Registry.CurrentUser}\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings";
-
         private readonly FiddlerCoreStartupSettings startupSettings;
-
         private (object _currentProxyServer, int _defaultUserProxyState) proxySettings;
-
         private (string _fiddlerCert, string _privateKey) _fiddlerCertInfos;
-
         private int count = 0;
-        #endregion
 
         public Proxy() : this(9999) { } //default port
 
@@ -123,9 +116,8 @@ namespace Partypacker.Proxy
         {
             appRegistry.Dispose();
             BeforeRequest += OnBeforeRequest;
-            AfterSessionComplete += OnAfterSessionComplete;
             Startup(startupSettings);
-            Console.WriteLine($"Proxy started listening on port {startupSettings.ListenPort}.");
+            Console.WriteLine($"Proxy started listening on port {startupSettings.ListenPort.ToString().Pastel(Color.LimeGreen)}.");
         }
 
         public bool StopProxy()
@@ -137,38 +129,33 @@ namespace Partypacker.Proxy
         #region EVENT_HANDLERS
         private void OnBeforeRequest(Session oSession)
         {
-            if (oSession.hostname.Contains(".ol.epicgames.com"))
+            if (oSession.PathAndQuery.Contains("/content/api/pages/fortnite-game/spark-tracks")
+             || oSession.HostnameIs("cdn.qstv.on.epicgames.com")
+             || oSession.PathAndQuery.Contains("/master.blurl")
+             || oSession.PathAndQuery.Contains("/main.blurl")
+            )
             {
                 if (oSession.HTTPMethodIs("CONNECT"))
                 {
                     oSession["x-replywithtunnel"] = "FortniteTunnel";
                     return;
                 }
-                oSession.fullUrl = "https://lawinserverfinal.herokuapp.com" + oSession.PathAndQuery;
 
+                string BaseURL = // thats gonna be taken on most machines but sure
+#if DEBUG
+                    "http://localhost:80";
+#else
+                    "https://api.partypack.mcthe.dev";
+#endif
+
+                if (oSession.PathAndQuery.Contains("/master.blurl")
+                 || oSession.PathAndQuery.Contains("/main.blurl"))
+                    oSession.fullUrl = BaseURL + oSession.PathAndQuery;
+                else
+                    oSession.fullUrl = BaseURL + oSession.PathAndQuery;
             }
         }
-
-        private void OnAfterSessionComplete(Session oSession)
-        {
-            if (oSession.hostname != "lawinserverfinal.herokuapp.com")
-            {
-                return;
-            }
-            if (oSession.responseCode >= 400)
-            {
-                string fullUrl = oSession.fullUrl;
-                string requestHeaders = oSession.oRequest.headers.ToString();
-                int responseCode = oSession.responseCode;
-
-                /*LogError($"[Endpoint] {fullUrl}\n" +
-                        $"[ResponseCode] {responseCode}\n" +
-                        $"[RequestHeader] {requestHeaders}\n\n"
-                        );*/
-            }
-            Console.Title = $"LawinServer - Redirected {++count} endpoints";
-        }
-        #endregion
+#endregion
 
         #region CLEANUP
         private bool ResetProxySettings()
