@@ -20,6 +20,7 @@ namespace Partypacker.Net
         // https://github.com/PsychoPast/LawinServer/blob/master/LawinServer/Proxy/Proxy.cs
         // without it, fiddler-less proxying would have never been achieved
 
+        public string Token = "";
         private const string Proxy_Server = "ProxyServer";
         private const string Proxy_Enable = "ProxyEnable";
         private readonly AppRegistry appRegistry;
@@ -31,14 +32,14 @@ namespace Partypacker.Net
 
         public Proxy() : this(9999) { } //default port
 
-        public Proxy(ushort port)
+        public Proxy(int port)
         {
             appRegistry = new AppRegistry();
 
             GetDefaultProxySettingsValue();
             ConfigureFiddlerSettings(out bool fiddlerCertRegKeysExist);
             startupSettings = new FiddlerCoreStartupSettingsBuilder()
-                    .ListenOnPort(port)
+                    .ListenOnPort((ushort)port)
                     .RegisterAsSystemProxy()
                     .DecryptSSL()
                     .OptimizeThreadPool()
@@ -129,9 +130,8 @@ namespace Partypacker.Net
         #region EVENT_HANDLERS
         private void OnBeforeRequest(Session oSession)
         {
-            if (oSession.PathAndQuery.Contains("/content/api/pages/fortnite-game/spark-tracks")
+            if (oSession.PathAndQuery.Contains("/content/api/pages/fortnite-game")
              || oSession.HostnameIs("cdn.qstv.on.epicgames.com")
-             || oSession.HostnameIs("cdn-0001.qstv.on.epicgames.com")
              || oSession.PathAndQuery.Contains("/master.blurl")
              || oSession.PathAndQuery.Contains("/main.blurl")
             )
@@ -149,6 +149,8 @@ namespace Partypacker.Net
                     "https://api.partypack.mcthe.dev";
 #endif
 
+                oSession.RequestHeaders.Add("X-Partypack-Token", Token);
+
                 if (oSession.PathAndQuery.Contains("/master.blurl")
                  || oSession.PathAndQuery.Contains("/main.blurl"))
                     oSession.fullUrl = BaseURL + "/song/download" + oSession.PathAndQuery;
@@ -156,7 +158,7 @@ namespace Partypacker.Net
                     oSession.fullUrl = BaseURL + oSession.PathAndQuery;
             }
         }
-#endregion
+        #endregion
 
         #region CLEANUP
         private bool ResetProxySettings()

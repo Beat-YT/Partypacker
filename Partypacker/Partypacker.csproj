@@ -1,27 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-	<ApplicationIcon>icon.ico</ApplicationIcon>
-	<PackageIcon>icon.ico</PackageIcon>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AdonisUI" Version="1.17.1" />
+    <PackageReference Include="AdonisUI.ClassicTheme" Version="1.17.1" />
     <PackageReference Include="BCMakeCert" Version="2.0.9" />
     <PackageReference Include="FiddlerCore.Trial" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Pastel" Version="5.0.0" />
-    <PackageReference Include="System.ComponentModel.Composition" Version="8.0.0" />
     <PackageReference Include="Telerik.NetworkConnections" Version="0.2.0" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="icon.ico">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <PackageReference Include="Watson" Version="5.1.3" />
   </ItemGroup>
 
 </Project>

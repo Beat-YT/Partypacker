@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -7,12 +8,26 @@ using System.Threading.Tasks;
 
 namespace Partypacker.Core
 {
-    internal class Server
+    internal class PartypackServer
     {
+        public static string BaseURL =
+#if DEBUG
+                "http://localhost:6677";
+#else
+                "https://partypack.mcthe.dev";
+#endif
+
+        public static string DashboardURL =
+#if DEBUG
+                "http://localhost:5173";
+#else
+                "https://partypack.mcthe.dev";
+#endif
+
         public static KeyValuePair<bool, string> GET(string URL = "/")
         {
             if (URL.StartsWith("/"))
-                URL = "https://example.com" + URL;
+                URL = BaseURL + URL;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
             request.Method = "GET";
@@ -38,7 +53,7 @@ namespace Partypacker.Core
         public static KeyValuePair<bool, string> POST(string URL = "/", string Body = "")
         {
             if (URL.StartsWith("/"))
-                URL = "https://example.com" + URL;
+                URL = BaseURL + URL;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
             request.Method = "POST";
@@ -66,5 +81,5 @@ namespace Partypacker.Core
         }
     }
 
-    
+
 }
