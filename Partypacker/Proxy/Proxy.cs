@@ -20,6 +20,7 @@ namespace Partypacker.Net
         // https://github.com/PsychoPast/LawinServer/blob/master/LawinServer/Proxy/Proxy.cs
         // without it, fiddler-less proxying would have never been achieved
 
+        public string Token = "";
         private const string Proxy_Server = "ProxyServer";
         private const string Proxy_Enable = "ProxyEnable";
         private readonly AppRegistry appRegistry;
@@ -129,9 +130,8 @@ namespace Partypacker.Net
         #region EVENT_HANDLERS
         private void OnBeforeRequest(Session oSession)
         {
-            if (oSession.PathAndQuery.Contains("/content/api/pages/fortnite-game/spark-tracks")
+            if (oSession.PathAndQuery.Contains("/content/api/pages/fortnite-game")
              || oSession.HostnameIs("cdn.qstv.on.epicgames.com")
-             || oSession.HostnameIs("cdn-0001.qstv.on.epicgames.com")
              || oSession.PathAndQuery.Contains("/master.blurl")
              || oSession.PathAndQuery.Contains("/main.blurl")
             )
@@ -148,6 +148,8 @@ namespace Partypacker.Net
 #else
                     "https://api.partypack.mcthe.dev";
 #endif
+
+                oSession.RequestHeaders.Add("X-Partypack-Token", Token);
 
                 if (oSession.PathAndQuery.Contains("/master.blurl")
                  || oSession.PathAndQuery.Contains("/main.blurl"))

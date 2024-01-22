@@ -1,4 +1,5 @@
-﻿using Partypacker.Net;
+﻿using Partypacker.Core;
+using Partypacker.Net;
 using Pastel;
 using System.Diagnostics;
 using System.Drawing;
@@ -14,6 +15,8 @@ namespace Partypacker
         private static void Main(string[] args)
         {
             ushort? port = 6969;
+
+            var DiscordLoginLink = Server.GET("/api/discord/url");
 
             Console.SetWindowSize(75, 20);
 
@@ -39,7 +42,8 @@ namespace Partypacker
             {
                 new SelectableOption("Launch Fortnite", () =>
                     Run(port, () => Process.Start(new ProcessStartInfo { FileName = "com.epicgames.launcher://apps/fn%3A4fe75bbc5a674f4f9b356b5c90567da5%3AFortnite?action=launch&silent=true", UseShellExecute = true }))),
-                new SelectableOption("Open Dashboard", () => Process.Start(new ProcessStartInfo { FileName = "https://partypack.mcthe.dev", UseShellExecute = true }))
+                new SelectableOption("Open Dashboard", () => Process.Start(new ProcessStartInfo { FileName = "https://partypack.mcthe.dev", UseShellExecute = true })),
+                new SelectableOption("Log in using Discord", () => Process.Start(new ProcessStartInfo { FileName = DiscordLoginLink.Value, UseShellExecute = true }))
             };
 
             try
@@ -93,6 +97,8 @@ namespace Partypacker
                 _ => new Proxy((ushort)port)
             };
             Proxx.StartProxy();
+            // please make this dynamic later :D
+            Proxx.Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjQ1NDk2ODU0MjcyMzU3MTcxNSIsImlhdCI6MTcwNTkyODQ0M30.ogINqFZ_3DBkECbHo87HjW9c6p2imT1CnCvfIR3iGJ4";
 
             Finish.Invoke();
         }

@@ -9,10 +9,17 @@ namespace Partypacker.Core
 {
     internal class Server
     {
+        static string BaseURL =
+#if DEBUG
+                "http://localhost:6677";
+#else
+                "https://api.partypack.mcthe.dev";
+#endif
+
         public static KeyValuePair<bool, string> GET(string URL = "/")
         {
             if (URL.StartsWith("/"))
-                URL = "https://example.com" + URL;
+                URL = BaseURL + URL;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
             request.Method = "GET";
@@ -38,7 +45,7 @@ namespace Partypacker.Core
         public static KeyValuePair<bool, string> POST(string URL = "/", string Body = "")
         {
             if (URL.StartsWith("/"))
-                URL = "https://example.com" + URL;
+                URL = BaseURL + URL;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
             request.Method = "POST";
