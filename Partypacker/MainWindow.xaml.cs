@@ -61,7 +61,7 @@ namespace Partypacker
             }
 
             Token = _Token;
-            UserDetails = JsonConvert.DeserializeObject<UserDetailObject>(Encoding.UTF8.GetString(Convert.FromBase64String(HttpUtility.UrlDecode(_UserDetails))));
+            UserDetails = JsonConvert.DeserializeObject<UserDetailObject>(Encoding.UTF8.GetString(Convert.FromHexString(HttpUtility.UrlDecode(_UserDetails))));
 
             await ctx.Response.Send("All done! You can close this tab now.");
             sv.Stop();
