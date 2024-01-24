@@ -66,7 +66,7 @@ namespace Partypacker
         {
             this.Dispatcher.Invoke(() =>
             {
-                UsernameTextBlock.Text = @$"{UserDetails.GlobalName} (@{UserDetails.Username})";
+                UsernameTextBlock.Text = string.IsNullOrWhiteSpace(UserDetails.GlobalName) ? UserDetails.Username : @$"{UserDetails.GlobalName} (@{UserDetails.Username})";
                 ProfilePictureImage.ImageSource = (ImageSource)new ImageSourceConverter().ConvertFromString(UserDetails.Avatar);
                 UsernameTextBlock.Visibility = Visibility.Visible;
                 PFPContainer.Visibility = Visibility.Visible;
