@@ -12,6 +12,12 @@
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}"/>
     </Window.Style>
+    <Window.Resources>
+        <Style x:Key="NexaBoldFont">
+            <Setter Property="TextElement.FontFamily" Value="#NexaBold"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -31,14 +37,16 @@
             <ColumnDefinition />
             <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
-        <TextBox PreviewTextInput="TextBox_PreviewTextInput" Grid.Row="2" Grid.Column="1" adonisExtensions:WatermarkExtension.Watermark="Proxy Port (default: 6969)" TextChanged="OnChangePort" Margin="0,10,0,0" Grid.RowSpan="2" />
-        <Button x:Name="LaunchButton" Grid.Row="4" Grid.Column="1" Click="OnLaunch" IsEnabled="False" Margin="0,10,0,0" Grid.RowSpan="2">Launch</Button>
-        <Button x:Name="LoginButton" Grid.Row="7" Grid.Column="1" Click="OnLoginUsingDiscord">Log in using Discord</Button>
-        <Ellipse x:Name="PFPContainer" MouseLeftButtonDown="OnDashboard" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,8,195,211" Grid.Column="1" Stretch="Uniform" Width="{Binding Source.PixelWidth, RelativeSource={RelativeSource Self}}" Height="{Binding Source.PixelHeight, RelativeSource={RelativeSource Self}}" Visibility="Hidden">
+        <TextBox PreviewTextInput="TextBox_PreviewTextInput" Grid.Column="3" adonisExtensions:WatermarkExtension.Watermark="Proxy Port (default: 6969)" TextChanged="OnChangePort" Margin="10,10,260,0" Grid.RowSpan="2" Grid.Row="6" />
+        <Button x:Name="LaunchButton" Grid.Row="4" Grid.Column="3" Click="OnLaunch" IsEnabled="False" Margin="10,10,260,0" Grid.RowSpan="2">Launch</Button>
+        <Button x:Name="LoginButton" Grid.Row="2" Grid.Column="3" Click="OnLoginUsingDiscord" Margin="10,10,260,0" Grid.RowSpan="2">Log in using Discord</Button>
+        <Ellipse x:Name="PFPContainer" MouseLeftButtonDown="OnDashboard" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,8,195,211" Grid.Column="1" Stretch="Uniform" Visibility="Hidden">
             <Ellipse.Fill>
                 <ImageBrush x:Name="ProfilePictureImage" ImageSource="https://cdn.discordapp.com/avatars/419224403415662592/b9486673bd2a484314a1e718c9d9c57b.webp" Stretch="UniformToFill"/>
             </Ellipse.Fill>
         </Ellipse>
         <TextBlock x:Name="UsernameTextBlock" HorizontalAlignment="Left" Margin="43,16,0,0" TextWrapping="Wrap" Text="AveryMadness (@averymadness)" VerticalAlignment="Top" Grid.Column="1" Visibility="Hidden"/>
+        <Image x:Name="Logo" Grid.Column="3" HorizontalAlignment="Left" Height="201" VerticalAlignment="Top" Width="200" Source="/Icon.png" Margin="26,41,0,0" Stretch="Uniform"/>
+        <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="44,222,0,0" TextWrapping="Wrap" Text="Partypack" VerticalAlignment="Top" Height="67" Width="182" FontSize="36" Style="{DynamicResource NexaBoldFont}" Grid.RowSpan="2"/>
     </Grid>
 </Window>

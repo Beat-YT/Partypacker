@@ -14,14 +14,14 @@ namespace Partypacker.Core
 #if DEBUG
                 "http://localhost:6677";
 #else
-                "https://partypack.mcthe.dev";
+                MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://partypack.mcthe.dev";
 #endif
 
         public static string DashboardURL =
 #if DEBUG
                 "http://localhost:5173";
 #else
-                "https://partypack.mcthe.dev";
+                MainWindow.settings.GetValue("Launcher", "dashurl") ?? "https://partypack.mcthe.dev";
 #endif
 
         public static KeyValuePair<bool, string> GET(string URL = "/")

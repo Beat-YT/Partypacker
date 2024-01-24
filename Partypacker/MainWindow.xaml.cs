@@ -29,7 +29,7 @@ namespace Partypacker
         static string Token;
         static UserDetailObject UserDetails;
         static Server sv;
-        static INIFile settings = new("settings.ini", true);
+        public static INIFile settings = new("settings.ini", true);
 
         public MainWindow()
         {

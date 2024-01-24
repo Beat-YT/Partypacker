@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="favicon.png" />
+    <None Remove="Icon.png" />
+    <None Remove="Nexa Bold.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="PartyPacker.ico" />
   </ItemGroup>
 
@@ -22,6 +28,26 @@
     <PackageReference Include="Pastel" Version="5.0.0" />
     <PackageReference Include="Telerik.NetworkConnections" Version="0.2.0" />
     <PackageReference Include="Watson" Version="5.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icon.png" />
+    <Resource Include="Nexa Bold.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
