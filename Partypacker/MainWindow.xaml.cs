@@ -6,11 +6,14 @@ using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Timers;
+using System.Transactions;
 using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using WatsonWebserver;
 
 namespace Partypacker
@@ -72,7 +75,10 @@ namespace Partypacker
 
         void AutoLogin()
         {
-            Token = settings.GetValue("Launcher", "token");
+            var B64Token = settings.GetValue("Launcher", "token");
+            var NonB64Bytes = Convert.FromHexString(B64Token);
+            var NonB64Str = Encoding.UTF8.GetString(NonB64Bytes);
+            Token = NonB64Str;
             UserDetails = JsonConvert.DeserializeObject<UserDetailObject>(Encoding.UTF8.GetString(Convert.FromHexString(HttpUtility.UrlDecode(settings.GetValue("Launcher", "user")))));
             UpdateUserUI();
             Dispatcher.Invoke(() =>
@@ -123,7 +129,7 @@ namespace Partypacker
             Token = _Token;
             UserDetails = JsonConvert.DeserializeObject<UserDetailObject>(Encoding.UTF8.GetString(Convert.FromHexString(HttpUtility.UrlDecode(_UserDetails))));
             settings.SetValue("Launcher", "user", HttpUtility.UrlDecode(_UserDetails));
-            settings.SetValue("Launcher", "token", Token);
+            settings.SetValue("Launcher", "token", Convert.ToHexString(Encoding.UTF8.GetBytes(Token)));
             UpdateUserUI();
             Dispatcher.Invoke(() =>
             {
@@ -151,14 +157,49 @@ namespace Partypacker
             }
         }
 
-        void OnLaunch(object sender, RoutedEventArgs e)
+        bool WaitingForGameToOpen = true;
+        System.Timers.Timer GameCheckTimer;
+        private void CheckForProcessAndClose(object sender, ElapsedEventArgs e)
+        {
+            Process[] processes = Process.GetProcessesByName("FortniteLauncher");
+
+            if (WaitingForGameToOpen)
+            {
+                if (processes.Length > 0)
+                {
+                    WaitingForGameToOpen = false;
+                }
+            }
+            else
+            {
+                if (processes.Length <= 0)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        LaunchButton.IsEnabled = true;
+                    });
+                    WaitingForGameToOpen = true;
+                    GameCheckTimer.Stop();
+                }
+            }
+        }
+
+        async void OnLaunch(object sender, RoutedEventArgs e)
         {
             Proxx = new Proxy(Port);
             // please make this dynamic later :D
-            Proxx.Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjQ1NDk2ODU0MjcyMzU3MTcxNSIsImlhdCI6MTcwNTkyODQ0M30.ogINqFZ_3DBkECbHo87HjW9c6p2imT1CnCvfIR3iGJ4";
+            // ok
+            Proxx.Token = Token;
             Proxx.StartProxy();
 
-            //Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = "com.epicgames.launcher://apps/fn%3A4fe75bbc5a674f4f9b356b5c90567da5%3AFortnite?action=launch&silent=true" });
+            using (Process p = Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = "com.epicgames.launcher://apps/fn%3A4fe75bbc5a674f4f9b356b5c90567da5%3AFortnite?action=launch&silent=true" }))
+            {
+                LaunchButton.IsEnabled = false;
+                GameCheckTimer = new System.Timers.Timer();
+                GameCheckTimer.Interval = 5000;
+                GameCheckTimer.Elapsed += CheckForProcessAndClose;
+                GameCheckTimer.Start();
+            }
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)

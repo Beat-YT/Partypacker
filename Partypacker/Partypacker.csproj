@@ -6,7 +6,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>PartyPacker.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="PartyPacker.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AdonisUI" Version="1.17.1" />
