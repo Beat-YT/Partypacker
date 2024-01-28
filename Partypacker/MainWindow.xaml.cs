@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using DiscordRPC;
+using DiscordRPC.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Partypacker.Core;
 using Partypacker.Net;
@@ -34,6 +36,7 @@ namespace Partypacker
         public MainWindow()
         {
             InitializeComponent();
+            InitializeRPC();
             Application.Current.Exit += OnApplicationExit;
 
             var DiscordURL = PartypackServer.GET("/api/discord/url");
@@ -206,6 +209,46 @@ namespace Partypacker
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        public DiscordRpcClient client;
+        void InitializeRPC()
+        {
+            client = new DiscordRpcClient("1198605718169858088");
+
+            client.Logger = new ConsoleLogger() { Level = LogLevel.Warning };
+
+            client.OnReady += (sender, e) =>
+            {
+                Console.WriteLine("Received Ready from user {0}", e.User.Username);
+            };
+
+            client.OnPresenceUpdate += (sender, e) =>
+            {
+                Console.WriteLine("Received Update! {0}", e.Presence);
+            };
+
+            client.Initialize();
+
+            client.SetPresence(new RichPresence()
+            {
+                Details = "Modding Fortnite Festival",
+                State = "Loading Custom Tracks",
+                Timestamps = new DiscordRPC.Timestamps()
+                {
+                    Start = DateTime.UtcNow,
+                },
+                Assets = new Assets()
+                {
+                    LargeImageKey = "logo",
+                    LargeImageText = "Partypacker - Alpha",
+                    //SmallImageKey = "image_small"
+                },
+                Buttons = new DiscordRPC.Button[]
+                {
+                    new DiscordRPC.Button() {Label = "Check out Partypack!", Url = "https://partypack.mcthe.dev/"}
+                }
+            });
         }
     }
 }
