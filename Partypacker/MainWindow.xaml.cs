@@ -38,6 +38,7 @@ namespace Partypacker
             InitializeComponent();
             InitializeRPC();
             Application.Current.Exit += OnApplicationExit;
+            Process.GetCurrentProcess().Exited += MainWindow_Exited;
 
             var DiscordURL = PartypackServer.GET("/api/discord/url");
             if (!DiscordURL.Key)
@@ -51,6 +52,11 @@ namespace Partypacker
 
             if (!string.IsNullOrWhiteSpace(settings.GetValue("Launcher", "token")))
                 AutoLogin();
+        }
+
+        private void MainWindow_Exited(object? sender, EventArgs e)
+        {
+            Proxx?.StopProxy();
         }
 
         void OnApplicationExit(object sender, ExitEventArgs e) => Proxx?.StopProxy();
@@ -177,6 +183,7 @@ namespace Partypacker
             });
             WaitingForGameToOpen = true;
             GameCheckTimer.Stop();
+            Proxx?.StopProxy();
         }
 
         async void OnLaunch(object sender, RoutedEventArgs e)
