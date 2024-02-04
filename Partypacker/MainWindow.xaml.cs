@@ -50,9 +50,7 @@ namespace Partypacker
             DiscordAuthURL = DiscordURL.Value;
 
             if (!string.IsNullOrWhiteSpace(settings.GetValue("Launcher", "token")))
-            {
                 AutoLogin();
-            }
         }
 
         void OnApplicationExit(object sender, ExitEventArgs e) => Proxx?.StopProxy();
@@ -84,10 +82,7 @@ namespace Partypacker
             Token = NonB64Str;
             UserDetails = JsonConvert.DeserializeObject<UserDetailObject>(Encoding.UTF8.GetString(Convert.FromHexString(HttpUtility.UrlDecode(settings.GetValue("Launcher", "user")))));
             UpdateUserUI();
-            Dispatcher.Invoke(() =>
-            {
-                LaunchButton.IsEnabled = true;
-            });
+            Dispatcher.Invoke(() => LaunchButton.IsEnabled = true);
             ConvertLoginToLogout();
         }
 
@@ -147,10 +142,9 @@ namespace Partypacker
 
         void OnLoginUsingDiscord(object sender, RoutedEventArgs e)
         {
-            Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = $@"{DiscordAuthURL}&state={HttpUtility.UrlEncode(Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new
+            Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = $"{DiscordAuthURL}&state={HttpUtility.UrlEncode(Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new
             {
                 Client = "PartypackerDesktop"
-
             }))))}"});
 
             if (sv == null)
@@ -169,29 +163,25 @@ namespace Partypacker
             if (WaitingForGameToOpen)
             {
                 if (processes.Length > 0)
-                {
                     WaitingForGameToOpen = false;
-                }
+
+                return;
             }
-            else
+
+            if (processes.Length > 0)
+                return;
+
+            Dispatcher.Invoke(() =>
             {
-                if (processes.Length <= 0)
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        LaunchButton.IsEnabled = true;
-                    });
-                    WaitingForGameToOpen = true;
-                    GameCheckTimer.Stop();
-                }
-            }
+                LaunchButton.IsEnabled = true;
+            });
+            WaitingForGameToOpen = true;
+            GameCheckTimer.Stop();
         }
 
         async void OnLaunch(object sender, RoutedEventArgs e)
         {
             Proxx = new Proxy(Port);
-            // please make this dynamic later :D
-            // ok
             Proxx.Token = Token;
             Proxx.StartProxy();
 
