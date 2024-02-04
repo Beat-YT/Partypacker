@@ -158,6 +158,10 @@ namespace Partypacker.Net
                 else
                     oSession.fullUrl = BaseURL + oSession.PathAndQuery;
             }
+            else
+            {
+                oSession.Ignore();
+            }
         }
         #endregion
 
