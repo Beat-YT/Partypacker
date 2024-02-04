@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Partypacker.Core
 {
@@ -12,14 +13,14 @@ namespace Partypacker.Core
     {
         public static string BaseURL =
 #if DEBUG
-                 MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://sparks-staging.coolmath.tech";
+                 MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://partypack.mcthe.dev";
 #else
                 MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://partypack.mcthe.dev";
 #endif
 
         public static string DashboardURL =
 #if DEBUG
-                MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://sparks-staging.coolmath.tech";
+                MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://partypack.mcthe.dev";
 #else
                 MainWindow.settings.GetValue("Launcher", "dashurl") ?? "https://partypack.mcthe.dev";
 #endif
@@ -46,7 +47,7 @@ namespace Partypacker.Core
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show(ex.Message);
                 return new KeyValuePair<bool, string>(false, string.Empty);
             }
         }

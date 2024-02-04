@@ -132,7 +132,7 @@ namespace Partypacker.Net
         {
             string BaseURL =
 #if DEBUG
-                    MainWindow.settings.GetValue("Launcher", "apiurl") ??  "https://sparks-staging.coolmath.tech";
+                    MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://partypack.mcthe.dev";
 #else
                     MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://partypack.mcthe.dev";
 #endif
