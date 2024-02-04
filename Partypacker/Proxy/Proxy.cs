@@ -132,9 +132,9 @@ namespace Partypacker.Net
         {
             string BaseURL =
 #if DEBUG
-                    "https://sparks-staging.coolmath.tech";
+                    MainWindow.settings.GetValue("Launcher", "apiurl") ??  "https://sparks-staging.coolmath.tech";
 #else
-                    "https://partypack.mcthe.dev";
+                    MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://partypack.mcthe.dev";
 #endif
 
             if (oSession.PathAndQuery.Contains("/content/api/pages/fortnite-game")
@@ -151,7 +151,6 @@ namespace Partypacker.Net
                 }
 
                 oSession.RequestHeaders.Add("X-Partypack-Token", Token);
-                oSession.RequestHeaders.Add("x-sparks-staging", "f3d0e05928afb8257b01477120739a93264c1817edf93999a46af1e226a5e18aee19111578ee73814c7eaffae7b57b50ae0a2902ebd868fe3fbd91b5a25391b46a5b0ce54d2f57d11bf249381370def840d3e6aaf929023892104f701298830478f62297cef250153ad5acc1ec09de494a644206dc275a4692b360315737ab96");
 
                 if (oSession.PathAndQuery.Contains("/master.blurl")
                  || oSession.PathAndQuery.Contains("/main.blurl"))

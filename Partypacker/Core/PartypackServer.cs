@@ -12,14 +12,14 @@ namespace Partypacker.Core
     {
         public static string BaseURL =
 #if DEBUG
-                "https://sparks-staging.coolmath.tech";
+                 MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://sparks-staging.coolmath.tech";
 #else
                 MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://partypack.mcthe.dev";
 #endif
 
         public static string DashboardURL =
 #if DEBUG
-                "https://sparks-staging.coolmath.tech";
+                MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://sparks-staging.coolmath.tech";
 #else
                 MainWindow.settings.GetValue("Launcher", "dashurl") ?? "https://partypack.mcthe.dev";
 #endif
@@ -30,7 +30,6 @@ namespace Partypacker.Core
                 URL = BaseURL + URL;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
-            request.Headers.Add("x-sparks-staging", "f3d0e05928afb8257b01477120739a93264c1817edf93999a46af1e226a5e18aee19111578ee73814c7eaffae7b57b50ae0a2902ebd868fe3fbd91b5a25391b46a5b0ce54d2f57d11bf249381370def840d3e6aaf929023892104f701298830478f62297cef250153ad5acc1ec09de494a644206dc275a4692b360315737ab96");
             request.Method = "GET";
             // request.Headers.Add("my-header", "my-value");
 
@@ -59,7 +58,6 @@ namespace Partypacker.Core
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
             request.Method = "POST";
             request.ContentType = "text/plain";
-            request.Headers.Add("x-sparks-staging", "f3d0e05928afb8257b01477120739a93264c1817edf93999a46af1e226a5e18aee19111578ee73814c7eaffae7b57b50ae0a2902ebd868fe3fbd91b5a25391b46a5b0ce54d2f57d11bf249381370def840d3e6aaf929023892104f701298830478f62297cef250153ad5acc1ec09de494a644206dc275a4692b360315737ab96");
 
             string Response = "";
             try
