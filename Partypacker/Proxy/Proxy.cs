@@ -149,12 +149,6 @@ namespace Partypacker.Net
                 oSession.responseCode = 204;
                 return;
             } else if (oSession.PathAndQuery.Contains("/api/v2/games/FNFestival/leaderboards/")) {
-                if (oSession.HTTPMethodIs("CONNECT"))
-                {
-                    oSession["x-replywithtunnel"] = "FortniteTunnel";
-                    return;
-                }
-                
                 oSession.utilCreateResponseAndBypassServer();
                 oSession.responseCode = 404;
                 return;
