@@ -137,6 +137,29 @@ namespace Partypacker.Net
                     MainWindow.settings.GetValue("Launcher", "apiurl") ?? "https://partypack.mcthe.dev";
 #endif
 
+            // dont let epic know things
+            if (oSession.HostnameIs("datarouter.ol.epicgames.com")) {
+                if (oSession.HTTPMethodIs("CONNECT"))
+                {
+                    oSession["x-replywithtunnel"] = "FortniteTunnel";
+                    return;
+                }
+                
+                oSession.utilCreateResponseAndBypassServer();
+                oSession.responseCode = 204;
+                return;
+            } else if (oSession.PathAndQuery.Contains("/api/v2/games/FNFestival/leaderboards/")) {
+                if (oSession.HTTPMethodIs("CONNECT"))
+                {
+                    oSession["x-replywithtunnel"] = "FortniteTunnel";
+                    return;
+                }
+                
+                oSession.utilCreateResponseAndBypassServer();
+                oSession.responseCode = 404;
+                return;
+            }
+
             if (oSession.PathAndQuery.Contains("/content/api/pages/fortnite-game")
              || oSession.HostnameIs("cdn.qstv.on.epicgames.com")
              || oSession.PathAndQuery.Contains("/master.blurl")
