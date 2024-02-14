@@ -148,7 +148,7 @@ namespace Partypacker.Net
                 oSession.utilCreateResponseAndBypassServer();
                 oSession.responseCode = 204;
                 return;
-            } else if (oSession.PathAndQuery.Contains("/api/v2/games/FNFestival/leaderboards/")) {
+            } else if (oSession.PathAndQuery.StartsWith("/api/v2/games/FNFestival/leaderboards/") || oSession.PathAndQuery.StartsWith("/api/v1/leaderboards/FNFestival/")) {
                 oSession.utilCreateResponseAndBypassServer();
                 oSession.responseCode = 404;
                 return;
